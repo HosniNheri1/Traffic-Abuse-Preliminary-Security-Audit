@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hosni Nheri — Offensive Security &amp; Penetration Testing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101820;
+    --ink-2:#182432;
+    --paper:#F4F1E9;
+    --paper-dim:#c9c4b4;
+    --line:#2b394a;
+    --steel:#5C8CA6;
+    --amber:#C68A3E;
+    --rust:#A6503F;
+    --sage:#5E8368;
+    --max:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Sans',-apple-system,Segoe UI,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber);color:var(--ink);}
+  a{color:var(--steel);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--amber); outline-offset:3px;}
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+
+  header.hero{
+    border-bottom:1px solid var(--line);
+    padding:88px 0 64px;
+  }
+  .kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--paper-dim);
+    letter-spacing:.02em;
+    margin:0 0 22px;
+  }
+  .kicker::before{content:"$ "; color:var(--sage);}
+  h1{
+    font-family:'Source Serif 4',Georgia,serif;
+    font-weight:700;
+    font-size:clamp(34px,5vw,54px);
+    line-height:1.08;
+    margin:0 0 18px;
+    max-width:14ch;
+  }
+  .role{
+    font-size:18px;
+    color:var(--paper-dim);
+    max-width:52ch;
+    margin:0 0 34px;
+  }
+  .links{display:flex; flex-wrap:wrap; gap:10px;}
+  .links a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--paper);
+    text-decoration:none;
+    border:1px solid var(--line);
+    padding:9px 16px;
+    border-radius:2px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .links a:hover{border-color:var(--steel); color:var(--steel);}
+
+  section{padding:64px 0; border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+
+  .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--steel);
+    letter-spacing:.03em;
+    margin:0 0 12px;
+  }
+  h2{
+    font-family:'Source Serif 4',Georgia,serif;
+    font-weight:600;
+    font-size:30px;
+    margin:0 0 8px;
+  }
+  .lede{color:var(--paper-dim); max-width:62ch; margin:0 0 40px; font-size:16px;}
+
+  /* --- case study meta strip --- */
+  .meta-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--line);
+    margin-bottom:40px;
+  }
+  .meta-cell{
+    padding:18px 20px;
+    border-right:1px solid var(--line);
+  }
+  .meta-cell:last-child{border-right:none;}
+  .meta-cell .k{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--paper-dim); margin-bottom:6px;}
+  .meta-cell .v{font-size:15px; font-weight:500;}
+  @media (max-width:680px){
+    .meta-strip{grid-template-columns:repeat(2,1fr);}
+    .meta-cell:nth-child(2){border-right:none;}
+  }
+
+  /* --- evidence-style boxes --- */
+  .finding{
+    border:1px solid var(--line);
+    border-left:3px solid var(--steel);
+    padding:22px 24px;
+    margin-bottom:16px;
+    background:var(--ink-2);
+  }
+  .finding.high{border-left-color:var(--rust);}
+  .finding.mid{border-left-color:var(--amber);}
+  .finding.clear{border-left-color:var(--sage);}
+  .finding-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    margin-bottom:8px; flex-wrap:wrap;
+  }
+  .finding-head h3{font-family:'Source Serif 4',serif; font-size:19px; margin:0; font-weight:600;}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--paper-dim);
+    white-space:nowrap;
+  }
+  .finding p{margin:0; color:var(--paper-dim); font-size:15px;}
+
+  /* --- numbered process --- */
+  .phases{counter-reset:phase;}
+  .phase{
+    display:grid;
+    grid-template-columns:52px 1fr;
+    gap:20px;
+    padding:20px 0;
+    border-top:1px solid var(--line);
+  }
+  .phase:first-child{border-top:none;}
+  .phase-num{
+    font-family:'Source Serif 4',serif;
+    font-size:28px;
+    color:var(--paper-dim);
+  }
+  .phase h3{font-size:17px; margin:0 0 6px; font-weight:600;}
+  .phase p{margin:0; color:var(--paper-dim); font-size:15px; max-width:60ch;}
+
+  /* --- risk table --- */
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line);}
+  th{font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:11px; color:var(--paper-dim); text-transform:none;}
+  td{color:var(--paper-dim);}
+  td.rule{color:var(--paper); font-weight:500;}
+  .risk{font-family:'IBM Plex Mono',monospace; font-size:12px;}
+  .risk.low{color:var(--sage);}
+  .risk.mod{color:var(--amber);}
+  .risk.high{color:var(--rust);}
+  .tbl-wrap{overflow-x:auto; border:1px solid var(--line);}
+  .tbl-wrap table{min-width:560px;}
+
+  /* --- skills --- */
+  .skills{display:flex; flex-wrap:wrap; gap:10px;}
+  .skill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:9px 14px;
+    border:1px solid var(--line);
+    color:var(--paper-dim);
+  }
+
+  .note{
+    font-size:14px;
+    color:var(--paper-dim);
+    border-left:3px solid var(--line);
+    padding:14px 18px;
+    margin-top:28px;
+  }
+  .note strong{color:var(--paper);}
+
+  footer{padding:48px 0 80px;}
+  footer .foot-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+  }
+  footer p{color:var(--paper-dim); font-size:14px; margin:0;}
+
+  @media (prefers-reduced-motion:no-preference){
+    header.hero{animation:rise .6s ease both;}
+    @keyframes rise{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="kicker">whoami</p>
+    <h1>Hosni Nheri</h1>
+    <p class="role">Cybersecurity engineering student focused on offensive security and penetration testing — I audit live infrastructure, separate confirmed evidence from hypothesis, and ship risk-managed fixes clients can actually deploy.</p>
+    <div class="links">
+      <a href="https://github.com/" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="#case-study">Case study</a>
+      <a href="#skills">Skills</a>
+      <a href="#certificate">Certificate</a>
+    </div>
+  </header>
+
+  <section id="case-study">
+    <p class="label">Case study</p>
+    <h2>E-commerce Platform — Traffic Abuse &amp; Preliminary Security Audit</h2>
+    <p class="lede">A WordPress / WooCommerce retail site was seeing inflated visitor statistics and unexplained load. I ran a five-day, read-only assessment to determine whether the traffic was human, automated, or mixed — and whether it exposed a genuine application vulnerability. Client and infrastructure details below are anonymized; only the methodology, evidence classes, and outcome are shown.</p>
+
+    <div class="meta-strip">
+      <div class="meta-cell"><div class="k">SCOPE</div><div class="v">Traffic, WAF, WooCommerce, WordPress core</div></div>
+      <div class="meta-cell"><div class="k">MODE</div><div class="v">Read-only, non-destructive</div></div>
+      <div class="meta-cell"><div class="k">DURATION</div><div class="v">5-day engagement</div></div>
+      <div class="meta-cell"><div class="k">OUTPUT</div><div class="v">57-page report + deployed remediation</div></div>
+    </div>
+
+    <p class="label">What the evidence showed</p>
+    <div class="finding high">
+      <div class="finding-head"><h3>Distributed automated crawling</h3><span class="tag">strongly established</span></div>
+      <p>Roughly a thousand requests carried no referer, spread across hundreds of unique IPs, with systematic product-taxonomy traversal and near-identical browser fingerprints — a pattern that per-IP blocking cannot address by design.</p>
+    </div>
+    <div class="finding mid">
+      <div class="finding-head"><h3>Reconnaissance scanning</h3><span class="tag">confirmed</span></div>
+      <p>Automated probes targeted diagnostic files, credential-shaped paths, and common admin/login routes. No evidence that any probe succeeded — but the pattern alone justified blocking.</p>
+    </div>
+    <div class="finding mid">
+      <div class="finding-head"><h3>Application-function abuse</h3><span class="tag">observed</span></div>
+      <p>Cart and product-compare actions were triggered programmatically at a steady rate, each generating real server-side processing — a resource-consumption issue distinct from simple page scraping.</p>
+    </div>
+    <div class="finding clear">
+      <div class="finding-head"><h3>Code-level vulnerabilities</h3><span class="tag">none confirmed</span></div>
+      <p>Static review for SSRF, XSS, CSRF, SQL injection, and RCE indicators returned no matches in this preliminary pass. Reported as scoped, not as a clean bill of health — a full penetration test remains a separate, deeper engagement.</p>
+    </div>
+
+    <div class="note"><strong>Reporting discipline:</strong> every finding was tagged as a confirmed observation, a strong indicator, or an unverified hypothesis — and the report explicitly lists what the evidence does <em>not</em> allow you to conclude. That distinction is what turns a scan output into a report someone can act on.</div>
+  </section>
+
+  <section>
+    <p class="label">Remediation approach</p>
+    <h2>Risk-managed, staged rollout</h2>
+    <p class="lede">Rather than shipping a single block-list, the fix was deployed in phases — narrowest and lowest-risk first, with an observation window before anything broader, so a false positive is traceable to one specific rule.</p>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <div><h3>Deploy the unambiguous fixes</h3><p>Block requests with no legitimate use case — diagnostic-file probes, known bad crawlers — where false-positive risk is effectively zero.</p></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <div><h3>Observe before expanding</h3><p>24–48 hours of monitoring against the live customer journey — browsing, cart, checkout, login — before touching anything broader.</p></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <div><h3>Add targeted, reversible controls</h3><p>Behavioral and rate-based rules scoped to the exact abused pattern — challenge, not block, wherever a real customer could plausibly match it.</p></div>
+      </div>
+      <div class="phase">
+        <div class="phase-num">04</div>
+        <div><h3>Record what didn't ship</h3><p>Plan-level constraints and scope deviations documented as open items, not hidden — an honest as-built beats a tidy plan.</p></div>
+      </div>
+    </div>
+
+    <p class="label" style="margin-top:40px;">Rules considered and explicitly rejected</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Control considered</th><th>Why it was rejected</th><th>Risk</th></tr></thead>
+        <tbody>
+          <tr><td class="rule">Block entire hosting network / ASN</td><td>Punishes every legitimate visitor sharing that network for the behavior of a few</td><td class="risk high">HIGH</td></tr>
+          <tr><td class="rule">Global rate limit on the AJAX endpoint</td><td>Store plugins share that endpoint for many legitimate actions</td><td class="risk high">HIGH</td></tr>
+          <tr><td class="rule">Block on empty referer alone</td><td>Privacy-respecting browsers and direct navigation are legitimate and referer-less</td><td class="risk mod">MODERATE</td></tr>
+          <tr><td class="rule">Block an entire country</td><td>Geography is not evidence of intent on its own</td><td class="risk high">HIGH</td></tr>
+          <tr><td class="rule">Diagnostic-file paths → Block</td><td>No legitimate flow ever touches these — shipped in phase one</td><td class="risk low">LOW</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note"><strong>Result:</strong> six of seven planned controls active in production; the targeted behavioral rule alone classified roughly 97% of matched crawl traffic as non-human, while only a handful of genuine visitors ever saw a challenge.</div>
+  </section>
+
+  <section id="skills">
+    <p class="label">Skills demonstrated</p>
+    <h2>What this project drew on</h2>
+    <div class="skills">
+      <span class="skill">Traffic &amp; log analysis</span>
+      <span class="skill">WAF / edge rule design (Cloudflare)</span>
+      <span class="skill">WordPress &amp; WooCommerce security</span>
+      <span class="skill">Evidence-based reporting</span>
+      <span class="skill">Risk-tiered remediation planning</span>
+      <span class="skill">Static code review (SSRF · XSS · CSRF · SQLi · RCE)</span>
+      <span class="skill">Client communication &amp; documentation</span>
+    </div>
+  </section>
+
+  <section id="certificate">
+    <p class="label">Certificate</p>
+    <h2>Client attestation</h2>
+    <p class="lede">A signed attestation of contribution from the client, confirming the scope and quality of the engagement.</p>
+    <img src="./assets/certificate.png" alt="Signed client attestation of contribution in cybersecurity" style="width:100%; max-width:560px; border:1px solid var(--line); display:block;">
+  </section>
+
+  <footer>
+    <div class="wrap foot-row">
+      <p>Hosni Nheri — Offensive Security &amp; Penetration Testing</p>
+      <p>Built to document real, anonymized field work.</p>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
