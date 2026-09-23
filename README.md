@@ -3,7 +3,7 @@
 Cybersecurity engineering student focused on offensive security and penetration testing. This repo hosts a portfolio page built around a real, anonymized field engagement: a preliminary security and traffic-abuse audit of a WordPress/WooCommerce e-commerce platform.
 
 View the portfolio →→→
-https://github.com/HosniNheri1/Traffic-Abuse-Preliminary-Security-Audit/index.html
+[https://github.com/HosniNheri1/Traffic-Abuse-Preliminary-Security-Audit/index.html](https://hosninheri1.github.io/Traffic-Abuse-Preliminary-Security-Audit/)
 
 ## What's in this repo
 
