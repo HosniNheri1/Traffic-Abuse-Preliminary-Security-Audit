@@ -29,8 +29,7 @@ The client's name, domain, and any infrastructure details (IP addresses, exact e
 ## Client attestation
 
 The client's Direction Générale issued the following signed attestation confirming the scope and quality of the work:
-
-![Client attestation of contribution in cybersecurity — Electro Space][(./assets/certificate.png)](https://github.com/HosniNheri1/Traffic-Abuse-Preliminary-Security-Audit/blob/main/assets/certificate.pdf)
+https://github.com/HosniNheri1/Traffic-Abuse-Preliminary-Security-Audit/blob/main/assets/certificate.pdf
 
 > *"[Hosni Nheri] contributed his expertise and carried out, on behalf of our company, several security analysis, assessment, and hardening projects for our online store... The work carried out helped strengthen our platform's security level, improve certain performance aspects, and put in place a preventive approach to better anticipate and limit IT-related risks."*
 > — M. Oussema Mesfar, Director General, Electro Space
